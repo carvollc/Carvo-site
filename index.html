@@ -12,9 +12,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .hero{text-align:center;padding:60px 0 60px;overflow:hidden}
 .hero h1{font-size:clamp(30px,4vw,42px);line-height:1.15;margin:0 0 18px;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
 .hero h1 .here{display:block;position:relative;width:max-content;margin:.15em auto 0;color:var(--gold);letter-spacing:.08em;line-height:1.1}
-.hero h1 .here{animation:hereZoom 3.8s ease-in-out infinite;transform-origin:center}
-@keyframes hereZoom{0%{transform:scale(1);opacity:0}12%{opacity:1}55%{transform:scale(1);opacity:1}100%{transform:scale(2.5);opacity:0}}
-@media(prefers-reduced-motion:reduce){.hero h1 .here{animation:none}}
+.hero h1 .here{animation:hereZoom 1.8s ease-out .3s 1 both;transform-origin:center;margin-bottom:.6em}
+@keyframes hereZoom{0%{transform:scale(.6);opacity:0}100%{transform:scale(1.6);opacity:1}}
+@media(prefers-reduced-motion:reduce){.hero h1 .here{animation:none;transform:scale(1.6)}}
 
 .hero h1 span{color:var(--gold)}.hero p{max-width:620px;margin:0 auto 30px;color:var(--mute);font-size:19px}
 .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -235,6 +235,8 @@ body.menu .dw{opacity:1;transform:none}
 .cf .btn{width:100%;margin-top:12px;border:0;cursor:pointer;font-family:inherit}.cf .btn[disabled]{opacity:.6}
 .cmsg{margin-top:10px;font-weight:600;font-size:15px}.cmsg.ok{color:#8fd19e}.cmsg.bad{color:#ff9b8f}
 @media(max-width:560px){.cg{grid-template-columns:1fr}}
+#consult>h2,#consult .prose{text-align:center}#consult .prose p{margin-left:auto;margin-right:auto}#consult .ck{margin:12px auto 0}#consult>p{margin-left:auto!important;margin-right:auto!important}
+#consult .prose{max-width:none}#consult .prose p{max-width:720px}#consult .ck li{text-align:left}#consult>p{max-width:none!important}
 </style></head><body>
 <div class="wrap">
 <header><a href="#top" aria-label="Carvo"><svg class="logo" stroke="#E8CF8E" viewBox="0 0 612 100" role="img" aria-label="Carvo" fill="none" stroke="#E8CF8E" stroke-width="7"><path d="M86 24 A40 40 0 1 0 86 76"/><path d="M138 95 L182 5 L226 95"/><path d="M276 95 V5 H316 A23 23 0 0 1 316 51 H276 M312 51 L344 95"/><path d="M394 5 L438 95 L482 5"/><circle cx="568" cy="50" r="40"/></svg></a>
@@ -285,7 +287,7 @@ body.menu .dw{opacity:1;transform:none}
 <p>Our recommendation is to always sleep on the deal and make sure you know everything you are about to get into. We can help you make the right deal for you and your family. Never any pressure and always honest advice.</p>
 <p style="margin-top:20px;font-weight:700;color:var(--text)">In the consultation, we will review the following:</p>
 <ul class="ck"><li>Trade in values</li><li>Your current payoff</li><li>Condition of lease return</li><li>Credit history and score</li><li>Cost of repairs</li><li>Lease vs finance</li><li>Current interest rates</li><li>And more&hellip;</li></ul>
-</div><p style="margin-top:22px;text-align:center"><button class="btn gold" type="button" id="copen" aria-expanded="false" aria-controls="cf" style="border:0;cursor:pointer;font-family:inherit">Schedule a consultation TODAY!</button></p>
+</div><p style="margin:22px 0 0;max-width:640px;text-align:center"><button class="btn gold" type="button" id="copen" aria-expanded="false" aria-controls="cf" style="border:0;cursor:pointer;font-family:inherit">Schedule a consultation TODAY!</button></p>
 <form class="cf" id="cf" novalidate hidden><h3>Schedule a consultation</h3>
 <div class="cg"><label>Name<input name="name" autocomplete="name" required maxlength="80"></label>
 <label>Mobile phone<input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="14" placeholder="954-555-0123"></label>
