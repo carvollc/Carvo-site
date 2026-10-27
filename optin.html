@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a quote - Carvo</title><style>
+  :root { --ink:#14202a; --bg:#fbfcfc; --soft:#4a5b68; --line:#cdd5da; --accent:#f4c20d; }
+  @media (prefers-color-scheme: dark) { :root { --ink:#e8edf0; --bg:#14202a; --soft:#a9b8c2; --line:#35495a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width: 68ch; margin: 0 auto; padding: 28px 18px 60px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 28px 0 6px; }
+  .meta { color: var(--soft); margin: 0 0 20px; }
+  a { color: inherit; }
+  label.f { display:block; font-weight:600; margin: 14px 0 0; }
+  label.f input:not([type=checkbox]), label.f textarea { display:block; width:100%; margin-top:4px; padding:10px 12px; font:inherit; color:inherit; background:transparent; border:1px solid var(--line); border-radius:4px; font-weight:400; }
+  label.f textarea { min-height: 90px; }
+  .check { display:flex; gap:10px; align-items:flex-start; margin:20px 0 4px; font-size:14px; color:var(--soft); }
+  .check input { margin-top:4px; width:18px; height:18px; flex:0 0 auto; }
+  button { margin-top:16px; padding:12px 20px; font:inherit; font-weight:700; background:var(--accent); color:#14202a; border:0; border-radius:4px; cursor:pointer; }
+  button:disabled { opacity:.6; cursor:wait; }
+  :focus-visible { outline:3px solid #1457d9; outline-offset:2px; }
+  .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  #msg { margin-top:14px; font-weight:600; }
+  #msg.err { color:#b8372b; }
+</style></head><body><main>
+<h1>Request a quote</h1>
+<p class="meta">Carvo. Tell us about the car you want to buy or sell and we will get back to you.</p>
+<form id="f" novalidate>
+  <label class="f">Name<input name="name" autocomplete="name" maxlength="80" required></label>
+  <label class="f">Mobile number<input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required></label>
+  <label class="f">Email (optional)<input name="email" type="email" autocomplete="email" maxlength="120"></label>
+  <label class="f">Vehicle you want to buy or sell (optional)<input name="vehicle" maxlength="120" placeholder="Year, make and model"></label>
+  <label class="f">Message (optional)<textarea name="message" maxlength="500"></textarea></label>
+  <div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label class="check"><input type="checkbox" name="consent" id="consent"><span>I agree to receive text messages from Carvo at the mobile number above about my vehicle inquiry, including replies, quotes, vehicle photos, and follow-ups. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent is not a condition of purchase. See the <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</span></label>
+  <button type="submit" id="send">Send request</button>
+  <div id="msg" role="status" aria-live="polite"></div>
+</form>
+<script>
+const f = document.getElementById('f'), msg = document.getElementById('msg'), btn = document.getElementById('send');
+f.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  msg.className = ''; msg.textContent = '';
+  const d = Object.fromEntries(new FormData(f).entries());
+  d.consent = document.getElementById('consent').checked;
+  btn.disabled = true;
+  try {
+    const r = await fetch('https://crm.carvo-ai.com/api/optin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || 'Something went wrong. Please try again.');
+    f.reset();
+    msg.textContent = d.consent ? 'Thanks, we got your request. You agreed to receive text messages from us. Reply STOP at any time to opt out.' : 'Thanks, we got your request and will be in touch.';
+  } catch (err) { msg.className = 'err'; msg.textContent = err.message; }
+  btn.disabled = false;
+});
+</script>
+<p class="meta" style="margin-top:36px"><a href="/optin.html">Contact us</a> &middot; <a href="/privacy.html">Privacy policy</a> &middot; <a href="/terms.html">Terms</a></p></main></body></html>
